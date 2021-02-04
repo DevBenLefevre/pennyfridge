@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2021_02_04_141640) do
     t.integer "rate"
     t.string "difficulty"
     t.string "budget"
-    t.string "preparation_time"
+    t.string "prep_time"
     t.string "total_time"
     t.integer "people_quantity"
     t.string "author_tip"
@@ -30,8 +30,8 @@ ActiveRecord::Schema.define(version: 2021_02_04_141640) do
     t.string "image"
     t.integer "nb_comments"
     t.string "cook_time"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
   end
 
 end
