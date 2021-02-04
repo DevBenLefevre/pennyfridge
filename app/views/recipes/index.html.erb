@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Recipes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <%= form_tag(recipes_path, method: :get) do %>
+      <select id="dropdown" name="ingredients[]" multiple="multiple" style="width:50%">
+        <option>pommes de terre</option>
+        <option>oignons</option>
+        <option>reblochon</option>
+        <option>lardons</option>
+      </select>
+
+      <%= submit_tag "J'ai au moins ça" %>
+    <% end %>
+
+    <% @recipes.each do |recipe| %>
+      <tr>
+        <td><%= recipe.author %></td>
+        <td><%= recipe.rate %></td>
+        <td><%= recipe.ingredients %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script>
+  console.log($( "#dropdown" ).select2({
+    tags: true,
+    tokenSeparators: [',']
+  }
+  ));
+</script>
