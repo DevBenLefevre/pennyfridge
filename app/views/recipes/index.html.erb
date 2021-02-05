@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Pennyfridge</h1>
+<h1><%= link_to "Pennyfridge", root_path %></h1>
 
 
 <p>What's in my frigo</p>
@@ -20,38 +20,48 @@
 <% end %>
 
 
-<table>
-  <thead>
-    <tr>
-      <th>Auteur</th>
-      <th>Note</th>
-      <th>Ingrédients</th>
-    </tr>
-  </thead>
 
-  <tbody>
+<% if (@recipes.length == 0 && !params[:ingredients].blank?)  %>
 
-  <% if params[:ingredients].blank? %>
+  <p><strong>Aucune recette trouvée. N'y a t'il pas autre chose dans votre frigo ? ;-)</strong></p>
 
-  <% end %>
+<% else %>
 
-  <% if @recipes %>
-    <span> Pour rappel, mes ingrédients disponibles : <span> <%= params[:ingredients] %>
-    <p><%= @recipes.length %> recettes correspondantes</p>
-
-    <% @recipes.each do |recipe| %>
+  <table>
+    <thead>
       <tr>
-        <td><%= recipe.author %></td>
-        <td><%= recipe.rate %></td>
-        <td><%= recipe.ingredients %></td>
+        <th>Auteur</th>
+        <th>Note</th>
+        <th>Ingrédients</th>
       </tr>
+    </thead>
+
+    <tbody>
+
+    <% if @recipes %>
+      <% if params[:ingredients].blank? %>
+        <span style="color:red">Vous n'avez pas renseigné d'ingrédients, voici 50 recettes aléatoires</span>
+        <br />
+        <br />
+      <% else %>
+        <p>Pour rappel, mes ingrédients disponibles : <span style="color:green"> <%= params[:ingredients] %> </span></p>
+        <p>et je souhaite une note minimale de <span style="color:green"><%= params[:rate] || 1 %> / 5</span><p>
+        <p><%= @recipes.length %> recettes correspondantes</p>
+      <% end %>
+
+      <% @recipes.each do |recipe| %>
+        <tr>
+          <td><%= recipe.author %></td>
+          <td><%= recipe.rate %></td>
+          <td><%= recipe.ingredients %></td>
+        </tr>
+      <% end %>
     <% end %>
 
-  <% else %>
-    Pas de recette trouvée :/
-  <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+  
+<% end %>
 
 <script>
   console.log($( "#dropdown" ).select2({
