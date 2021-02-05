@@ -23,7 +23,7 @@
 
 <% if (@recipes.length == 0 && !params[:ingredients].blank?)  %>
 
-  <p><strong>Aucune recette trouvée. N'y a t'il pas autre chose dans votre frigo ? ;-)</strong></p>
+  <p class='result-nok'><strong>Aucune recette trouvée. N'y a t'il pas autre chose dans votre frigo ? ;-)</strong></p>
 
 <% else %>
 
@@ -46,7 +46,7 @@
       <% else %>
         <p>Pour rappel, mes ingrédients disponibles : <span style="color:green"> <%= params[:ingredients] %> </span></p>
         <p>et je souhaite une note minimale de <span style="color:green"><%= params[:rate] || 1 %> / 5</span><p>
-        <p><%= @recipes.length %> recettes correspondantes</p>
+        <p class='result-ok'><%= @recipes.length %> recettes correspondantes</p>
       <% end %>
 
       <% @recipes.each do |recipe| %>
