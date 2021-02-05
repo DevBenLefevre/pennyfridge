@@ -8,7 +8,7 @@
 
 ActiveRecord::Base.connection.execute("TRUNCATE recipes")
 
-records = File.open("./storage/recipes.json").read
+records = File.open("./db/seeds/recipes.json").read
 bulk_array = []
 
 records.each_line do |record|
