@@ -1,24 +1,60 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## User Story
 
-Things you may want to cover:
+Cette application a pour but de répondre à la problématique suivante : "J'attends des amis à dîner mais je n'ai pas le temps de faire des courses. Sachant ce que j'ai dans mon frigo, qu'est-ce que je peux préparer ?"
 
-* Ruby version
+Pour utiliser l'application, il suffit de rentrer dans l'input prévu à cet effet, la liste des ingrédients qui sont présents dans notre frigo, séparés par des "," ou en tapant sur la touche "Entrée".
 
-* System dependencies
+Ensuite, au choix, on a la possibilité de choisir une note minimale sur la recette, allant de 1 à 5.
 
-* Configuration
+Pour finir, cliquer sur "Rechercher" et une liste des recettes contenant au moins un des aliments désirés apparaît.
 
-* Database creation
+Nous pourrons discuter avec plaisir des possibilités d'améliorations/évolution.
 
-* Database initialization
+## Dev-local
 
-* How to run the test suite
+Pour lancer le projet en local :
 
-* Services (job queues, cache servers, search engines, etc.)
+* docker-compose up (démarrer le container web et db, en postgresql)
+* rails db:seed
 
-* Deployment instructions
+## Déploiement
 
-* ...
+Le projet est déployé sur heroku : https://pennyfridge.herokuapp.com/
+
+## Interface
+
+Feel free to add React ;-)
+
+## Database
+
+La strucuture est volontairement simple, pour éviter les `JOIN` coûteux.
+
+```
+ActiveRecord::Schema.define(version: 2021_02_04_141640) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "recipes", force: :cascade do |t|
+    t.string "author"
+    t.integer "rate"
+    t.string "difficulty"
+    t.string "budget"
+    t.string "prep_time"
+    t.string "total_time"
+    t.integer "people_quantity"
+    t.string "author_tip"
+    t.string "ingredients"
+    t.string "name"
+    t.string "tags", array: true
+    t.string "image"
+    t.integer "nb_comments"
+    t.string "cook_time"
+    t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
+  end
+
+end
+```
