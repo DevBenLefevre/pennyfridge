@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2021_02_04_141640) do
     t.string "total_time"
     t.integer "people_quantity"
     t.string "author_tip"
-    t.string "ingredients", array: true
+    t.string "ingredients"
     t.string "name"
     t.string "tags", array: true
     t.string "image"

@@ -1,26 +1,28 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Recipes</h1>
+<h1>Pennyfridge</h1>
+
+
+<p>What's in my frigo</p>
+
+<%= form_tag(recipes_path, method: :get) do %>
+  <select id="dropdown" name="ingredients[]" multiple="multiple" style="width:50%" placeholder="jambon"></select>
+  <%= submit_tag "J'ai de la chance" %>
+<% end %>
+
 
 <table>
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th>Auteur</th>
+      <th>Note</th>
+      <th>Ingrédients</th>
     </tr>
   </thead>
 
   <tbody>
-
-    <%= form_tag(recipes_path, method: :get) do %>
-      <select id="dropdown" name="ingredients[]" multiple="multiple" style="width:50%">
-        <option>pommes de terre</option>
-        <option>oignons</option>
-        <option>reblochon</option>
-        <option>lardons</option>
-      </select>
-
-      <%= submit_tag "J'ai au moins ça" %>
-    <% end %>
+  <% if @recipes %>
+    <%= @recipes.length %>
 
     <% @recipes.each do |recipe| %>
       <tr>
@@ -29,6 +31,11 @@
         <td><%= recipe.ingredients %></td>
       </tr>
     <% end %>
+
+  <% else %>
+  <%= @recipes %>
+    Pas de recette trouvée :/
+  <% end %>
   </tbody>
 </table>
 

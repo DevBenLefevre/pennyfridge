@@ -6,11 +6,14 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+ActiveRecord::Base.connection.execute("TRUNCATE recipes")
+
 records = File.open("./storage/recipes.json").read
 bulk_array = []
 
 records.each_line do |record|
     parsed = JSON.parse(record)
+    parsed['ingredients'] = parsed['ingredients'].join(', ')
     bulk_array << parsed
     rescue JSON::ParserError => e
         next
