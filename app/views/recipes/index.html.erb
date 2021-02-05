@@ -4,10 +4,19 @@
 
 
 <p>What's in my frigo</p>
+<legend>(écrire au moins un ingrédient)</legend>
 
 <%= form_tag(recipes_path, method: :get) do %>
-  <select id="dropdown" name="ingredients[]" multiple="multiple" style="width:50%" placeholder="jambon"></select>
-  <%= submit_tag "J'ai de la chance" %>
+  <select id="dropdown" name="ingredients[]" multiple="multiple" style="width:50%" placeholder="jambon" class="select2" required></select>
+  <br />
+  <br />
+  <span>Note minimale (entre 1 et 5)</span>
+  <input type="number" id="rate" name="rate" min="1" max="5" value=1>
+  <br />
+  <br />
+  <%= submit_tag "Rechercher" %>
+  <br />
+  <br />
 <% end %>
 
 
@@ -21,8 +30,14 @@
   </thead>
 
   <tbody>
+
+  <% if params[:ingredients].blank? %>
+
+  <% end %>
+
   <% if @recipes %>
-    <%= @recipes.length %>
+    <span> Pour rappel, mes ingrédients disponibles : <span> <%= params[:ingredients] %>
+    <p><%= @recipes.length %> recettes correspondantes</p>
 
     <% @recipes.each do |recipe| %>
       <tr>
@@ -33,7 +48,6 @@
     <% end %>
 
   <% else %>
-  <%= @recipes %>
     Pas de recette trouvée :/
   <% end %>
   </tbody>
