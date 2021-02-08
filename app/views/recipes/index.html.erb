@@ -3,7 +3,7 @@
 <h1><%= link_to "Pennyfridge", root_path %></h1>
 
 
-<p>What's in my frigo</p>
+<h2 style="color: #4AC67F; font-size: 34px; line-height: 34px">What's in my frigo ?</h2>
 <legend>(écrire au moins un ingrédient)</legend>
 
 <%= form_tag(recipes_path, method: :get) do %>
@@ -66,7 +66,8 @@
 <script>
   console.log($( "#dropdown" ).select2({
     tags: true,
-    tokenSeparators: [',']
+    tokenSeparators: [','],
+    placeholder: 'jambon',
   }
   ));
 </script>
