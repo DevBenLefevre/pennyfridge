@@ -7,18 +7,9 @@ class RecipesController < ApplicationController
       return
     end
 
-    @recipes = Recipe.none
-
-    params[:ingredients].each do |ingredient|
-      @recipes = @recipes.or(Recipe.with_ingredient(ingredient))
-    end
-
-    if params[:rate].present?
-      @recipes = @recipes.rated_more_than(params[:rate])
-    end
-
+    @recipes = Recipe.get_by_ingredients(params[:ingredients].dup).sort_by { |recipe| (recipe.count_name.to_f/recipe.ingredients_count) }.reverse
   rescue => e
     @recipes = []
-    puts e.inspect
+    logger.error(e.inspect)
   end
 end

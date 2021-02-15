@@ -19,8 +19,6 @@
   <br />
 <% end %>
 
-
-
 <% if (@recipes.length == 0 && !params[:ingredients].blank?)  %>
 
   <p class='result-nok'><strong>Aucune recette trouvée. N'y a t'il pas autre chose dans votre frigo ? ;-)</strong></p>
@@ -32,6 +30,7 @@
       <tr>
         <th>Auteur</th>
         <th>Note</th>
+        <th>Pertinence</th>
         <th>Ingrédients</th>
       </tr>
     </thead>
@@ -53,7 +52,8 @@
         <tr>
           <td><%= recipe.author %></td>
           <td><%= recipe.rate %></td>
-          <td><%= recipe.ingredients %></td>
+          <td><%= (recipe.count_name.to_f/recipe.ingredients_count * 100).to_i %>%</td>
+          <td><%= recipe.ingredients.map { |i| i.name }.join(", ") %></td>
         </tr>
       <% end %>
     <% end %>

@@ -21,7 +21,7 @@ records.each_line.with_index(1) do |record, id|
     parsed['ingredients'].each do |ingredient|
         bulk_ingredients << {
             recipe_id: id,
-            ingredient: ingredient
+            name: ingredient
         }
     end
 
@@ -31,5 +31,8 @@ end
 
 Recipe.insert_all(bulk_recipes)
 Ingredient.insert_all(bulk_ingredients)
+
+Recipe.ids.each { |id| Recipe.reset_counters(id, :ingredients) }
+
 puts "#{Recipe.count} recipes saved"
 puts "#{Ingredient.count} ingredients saved"
