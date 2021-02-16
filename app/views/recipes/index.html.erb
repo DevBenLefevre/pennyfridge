@@ -10,10 +10,6 @@
   <select id="dropdown" name="ingredients[]" multiple="multiple" style="width:50%" placeholder="jambon" class="select2" required></select>
   <br />
   <br />
-  <span>Note minimale (entre 1 et 5)</span>
-  <input type="number" id="rate" name="rate" min="1" max="5" value=1>
-  <br />
-  <br />
   <%= submit_tag "Rechercher" %>
   <br />
   <br />
@@ -52,7 +48,7 @@
         <tr>
           <td><%= recipe.author %></td>
           <td><%= recipe.rate %></td>
-          <td><%= (recipe.count_name.to_f/recipe.ingredients_count * 100).to_i %>%</td>
+          <td><%= recipe.pertinence %>%</td>
           <td><%= recipe.ingredients.map { |i| i.name }.join(", ") %></td>
         </tr>
       <% end %>

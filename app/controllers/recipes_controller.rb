@@ -7,7 +7,7 @@ class RecipesController < ApplicationController
       return
     end
 
-    @recipes = Recipe.get_by_ingredients(params[:ingredients].dup).sort_by { |recipe| (recipe.count_name.to_f/recipe.ingredients_count) }.reverse
+    @recipes = Recipe.get_by_ingredients(params[:ingredients].dup).limit(50)
   rescue => e
     @recipes = []
     logger.error(e.inspect)

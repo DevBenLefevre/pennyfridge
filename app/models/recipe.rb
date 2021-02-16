@@ -1,28 +1,23 @@
 class Recipe < ApplicationRecord
   has_many :ingredients, dependent: :destroy
   scope :rated_more_than, ->(rate) { where("rate >= ?", rate) }
-  attr_accessor :pertinence
 
   BASIC_INGREDIENTS = %w{ sel poivre eau }
 
   def self.get_by_ingredients(ingredients)
     ingredients = ingredients.map(&:downcase) - BASIC_INGREDIENTS
 
-    subquery = Ingredient.none
+    matches = Ingredient.none
     
     ingredients.each do |ingredient|
-      subquery = subquery.or(Ingredient.with_name(ingredient))
+      matches = matches.or(Ingredient.with_name(ingredient))
     end
 
-    subquery = subquery .select('count(ingredients.name) as count_name')
-                        .group(:recipe_id)
-                        .order('count_name desc')
-
-    Recipe.select('recipes.*')
+    Recipe.select('recipes.*, count(ingredients.name) as count_name, (count(ingredients.recipe_id)*100/recipes.ingredients_count) as pertinence')
           .preload(:ingredients)
           .joins(:ingredients)
+          .merge(matches)
           .group('recipes.id')
-          .merge(subquery)
-
+          .order('pertinence desc')
   end
 end
