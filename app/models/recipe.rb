@@ -18,6 +18,6 @@ class Recipe < ApplicationRecord
           .joins(:ingredients)
           .merge(matches)
           .group('recipes.id')
-          .order('pertinence desc')
+          .order('pertinence desc, rate desc')
   end
 end
