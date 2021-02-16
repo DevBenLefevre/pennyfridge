@@ -48,7 +48,7 @@
         <tr>
           <td><%= recipe.author %></td>
           <td><%= recipe.rate %></td>
-          <td><%= recipe.pertinence %>%</td>
+          <td><%= params[:ingredients].present? ? "#{recipe.pertinence}%" : '-' %></td>
           <td><%= recipe.ingredients.map { |i| i.name }.join(", ") %></td>
         </tr>
       <% end %>
